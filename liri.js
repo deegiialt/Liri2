@@ -55,7 +55,7 @@ function mySpotify() {
 	}
 	//if no song is provided, default is "The Sign" by Ace of Base.
 	if(!song) {
-		song +="the sign";
+		song +="the sign ace of base";
 		// console.log("is working");
 	}
 
