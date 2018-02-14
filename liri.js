@@ -42,9 +42,10 @@ function myTweets() {
 }
 
 //making song global variable for doWhatItSays function
-var song = "";
+
 //show info about: artist, song name, preview of link of song, album
 function mySpotify() {
+	var song = "";
 	for(i = 3; i < process.argv.length; i++) {		
 			if (i > 3 && process.argv.length ) {
 				song += "+" + process.argv[i];
