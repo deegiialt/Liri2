@@ -40,41 +40,54 @@ function myTweets() {
 }
 
 //show info about: artist, song name, preview of link of song, album
-//if no song is provided, default is "The Sign" by Ace of Base.
 function mySpotify() {
-	spotify.search({ type: 'track', query: 'All the Small Things' }, function(err, data) {
+	var song = "";
+	for(i = 3; i < process.argv.length; i++) {		
+			if (i > 3 && process.argv.length ) {
+				song += "+" + process.argv[i];
+			} else {
+				song += process.argv[i];
+			}
+	}
+	//if no song is provided, default is "The Sign" by Ace of Base.
+	if(!song) {
+		song +="the sign";
+		// console.log("is working");
+	}
+
+	spotify.search({ type: 'track', query: song }, function(err, data) {
 		if (err) {
 			return console.log('Error occurred: ' + err);
 		}
-		console.log(data); 
+		var tracks = data.tracks.items[0];
+		console.log("Song name: " + tracks.name); 
+		console.log(`Artist(s): `+ tracks.artists[0].name);
+
+		//only log the preview url if it exists 
+		if(tracks.preview_url) {
+			console.log(`Preview of link: `+ tracks.preview_url);
+		} else {
+			console.log(`Preview of link unavailable for this song.`);
+		}
+		console.log(`Album: `+ tracks.album.name);
 	});
 }
 
-// * Title of the movie.
-// * Year the movie came out.
-// * IMDB Rating of the movie.
-// * Rotten Tomatoes Rating of the movie.
-// * Country where the movie was produced.
-// * Language of the movie.
-// * Plot of the movie.
-// * Actors in the movie.
-//if no movie, default is "Mr.Nobody" http://www.imdb.com/title/tt0485947/
 function myMovie() {
 	var request = require("request");
 	var movieName = ""; 
-		for(i = 3; i < process.argv.length; i++) {		
-			if (i > 3 && process.argv.length ) {
-				movieName += "+" + process.argv[i];
-			} 
-
-			// else if (process.argv[3] == null) {
-			// 	movieName += "Mr.Nobody";
-			// } 
-
-			else {
-				movieName += process.argv[i];
-			}
+	for(i = 3; i < process.argv.length; i++) {		
+		if (i > 3 && process.argv.length ) {
+			movieName += "+" + process.argv[i];
+		} else {
+			movieName += process.argv[i];
 		}
+	}
+	//if no movie, default is "Mr.Nobody" http://www.imdb.com/title/tt0485947/		
+	if(!movieName) {
+		movieName += "Mr.Nobody"; 
+	}
+
 	var queryUrl = "http://www.omdbapi.com/?t=" + movieName + "&y=&plot=short&apikey=trilogy";
 	request(queryUrl, function(error, response, body) {
 		if (!error && response.statusCode === 200) {
