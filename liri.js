@@ -5,6 +5,8 @@ var keys = require("./keys.js");
 var Twitter = require("twitter");
 var Spotify = require("node-spotify-api");
 
+var fs = require("fs");
+
 //keys.spotify exports
 var spotify = new Spotify(keys.spotify);
 var client = new Twitter(keys.twitter);
@@ -39,9 +41,10 @@ function myTweets() {
 	});
 }
 
+//making song global variable for doWhatItSays function
+var song = "";
 //show info about: artist, song name, preview of link of song, album
 function mySpotify() {
-	var song = "";
 	for(i = 3; i < process.argv.length; i++) {		
 			if (i > 3 && process.argv.length ) {
 				song += "+" + process.argv[i];
@@ -73,9 +76,10 @@ function mySpotify() {
 	});
 }
 
+//making movieName global variable for doWhatItSays function
+var movieName = ""; 
 function myMovie() {
 	var request = require("request");
-	var movieName = ""; 
 	for(i = 3; i < process.argv.length; i++) {		
 		if (i > 3 && process.argv.length ) {
 			movieName += "+" + process.argv[i];
@@ -105,5 +109,24 @@ function myMovie() {
 
 //uses fs node package. Takes text from random.txt
 function doWhatItSays() {
+	fs.readFile("random.txt", "utf8", function(error, data) {
+		if (error) {
+		return console.log(error);
+	}
 
+	// console.log(data);
+	// //went from string to array. Splits on commas and makes each movie to an array member
+	var dataArr = data.split(",");
+	if(dataArr[0] == "spotify-this-song") {
+		song += dataArr[1];
+		mySpotify();
+	} else if (dataArr[0] == "my-tweets") {
+		myTweets();
+	} else if (dataArr[0] == "movie-this") {
+		movieName += dataArr[1];
+		myMovie();
+	}
+	// console.log(dataArr[0]); //action
+	// console.log(dataArr[1]); //item
+	})
 }
