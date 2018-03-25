@@ -1,10 +1,7 @@
 require("dotenv").config();
-
 var keys = require("./keys.js");
-
 var Twitter = require("twitter");
 var Spotify = require("node-spotify-api");
-
 var fs = require("fs");
 
 //keys.spotify exports
