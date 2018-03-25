@@ -96,7 +96,7 @@ function myMovie() {
 			console.log("title: " + JSON.parse(body).Title);
 			console.log("year: " + JSON.parse(body).Year);
 			console.log("imdb rating: " + JSON.parse(body).imdbRating);
-			if(!undefined) {console.log("Rotten Tomatoes rating: " + JSON.parse(body).Ratings[1].Value)};
+// 			console.log("Rotten Tomatoes rating: " + JSON.parse(body).Ratings[1].Value);
 			console.log("country: " + JSON.parse(body).Country);
 			console.log("language: " + JSON.parse(body).Language);
 			console.log("plot: " + JSON.parse(body).Plot);
