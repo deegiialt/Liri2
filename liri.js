@@ -77,6 +77,7 @@ function mySpotify() {
 //making movieName global variable for doWhatItSays function
 var movieName = ""; 
 function myMovie() {
+	var movieName = ""; 
 	var request = require("request");
 	for(i = 3; i < process.argv.length; i++) {		
 		if (i > 3 && process.argv.length ) {
